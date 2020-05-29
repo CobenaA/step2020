@@ -3,16 +3,93 @@
   <head>
     <meta charset="UTF-8">
     <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="skeleton.css">
     <script src="script.js"></script>
   </head>
+  <style>
+    .container {
+    margin-top: 50px;
+    }
+    
+    #nav {
+    margin: 13px 0 0 0;
+    }
+    
+    #nav ul li {
+    display: inline;
+    margin: 0 20px 0 0;
+    margin-bottom: 130px;
+    font-size:150%;
+    }
+    
+    #nav a {
+    text-decoration: none;
+    }
+    
+    #nav a:hover {
+    text-decoration: underline;
+    }
+  </style>
   <body>
-    <!-- <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
-    </div> -->
+    <div class="container">
+        <div class="six columns">
+            <h3><em>Ariel Cobena</em></h3>
+        </div>
+         
+        <div id="nav" class="fourteencolumns">
+            <ul>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Experience</a></li>
+            <li><a href="https://github.com/CobenaA">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/ariel-cobena-054813196/">LinkedIn</a></li>
+            <!-- <li><a href="#">Updates</a></li> -->
+        </div>
+
+        <div id="welcome" class="sixteen columns">
+            <h1>[Aesthetic picture here]</1>
+            <h6>Text Overlay</h6>
+        </div>
+    </div>
+    <div class="container">
+        <div class="one-third column feature">
+            <h2>About</h2>
+            <p>Hello! I'm Ariel, a rising sophomore studying Computer Science at Rensselaer Polytechnic Institute in Troy, NY. I was born and raised in New York City with both parents being Peruvian. Apart from programming, I enjoy drinking cold brew and buying too much new tech. </p>
+        </div>
+
+        <div class="one-third column feature">
+            <h2>Experience</h2>
+            <ul>
+                <li> 
+                <strong>Google STEP Intern</strong>
+                <h6>May 2020 - August 2020</h6>
+                </li>
+                <li> <strong>Google Computer Science Summer Institute</strong>
+                <h6>July 2019</h6>
+                </li>
+                <li><strong>Best Buy Sales Consultant</strong>
+                <h6>September 2018 - July 2019</h6>
+                </li>
+            </ul>
+        </div>
+
+        <div class="one-third column feature">
+            <h2>Projects</h2>
+            <ul>
+                <li> 
+                <strong>RedditBot</strong>
+                <h6>A bot users can add to Discord servers to create a personalized feed of Reddit posts to users. Built using Python, Discord.py API, and Reddit's API. </h6>
+                </li>
+                <li> <strong>DataBot</strong>
+                <h6>A bot users can add to Discord servers to create a in depth statistics about messages sent on the server. It provides data and graphs based off individuals as well as the overall server. </h6>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container" id="content">
+      <button class="button-primary" onclick="addRandomGame()">Click here to get a random game</button>
+      <div id="games-container"></div>
+    </div>    
   </body>
 </html>
