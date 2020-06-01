@@ -12,17 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
+/*
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomGame() {
+  const games =
+      ['Valorant', 'Civilization VI', 'Rocket League', 'Minecraft'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const game = games[Math.floor(Math.random() * games.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const gamesContainer = document.getElementById('games-container');
+  gamesContainer.innerText = game;
+}
+
+/*
+ * Fetch data from the data servlet
+ */
+async function getData() {
+  const response = await fetch('/data');
+  const data = await response.text();
+  document.getElementById('data-container').innerText = data;
 }
