@@ -12,17 +12,54 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
+/*
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomGame() {
+  const games =
+      ['Valorant', 'Civilization VI', 'Rocket League', 'Minecraft'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const game = games[Math.floor(Math.random() * games.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const gamesContainer = document.getElementById('games-container');
+  gamesContainer.innerText = game;
+}
+
+/*
+ * Fetch data from the data servlet
+ */
+async function getData() {
+  const response = await fetch('/data');
+  const data = await response.text();
+  document.getElementById('data-container').innerText = data;
+}
+
+/**
+ * Fetches stats from the servers and adds them to the DOM.
+ */
+function getDataJSON() {
+
+
+    fetch('/data').then(response => response.json()).then((msgs) => {
+    // stats is an object, not a string, so we have to
+    // reference its fields to create HTML content
+    console.log(msgs);
+    const statsListElement = document.getElementById('data-container');
+    statsListElement.innerHTML = '';
+    statsListElement.appendChild(
+        createListElement('one: ' + msgs.one));
+    statsListElement.appendChild(
+        createListElement('two: ' + msgs.two));
+    statsListElement.appendChild(
+        createListElement('three: ' + msgs.three));
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
