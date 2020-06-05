@@ -13,6 +13,8 @@
 // limitations under the License.
 
 package com.google.sps.data;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter; 
 
 /** A comment on a website. */
 public final class Comment {
@@ -20,10 +22,22 @@ public final class Comment {
   private final long id;
   private final String text;
   private final long timestamp;
+  private final String time;
+  private final String name;
 
-  public Comment(long id, String text, long timestamp) {
+  public Comment(long id, String text, long timestamp, String time) {
     this.id = id;
     this.text = text;
     this.timestamp = timestamp;
+    this.time = time;
+    this.name = "Anonymous";
+  }
+
+  public Comment(long id, String text, long timestamp, String time, String name) {
+    this.id = id;
+    this.text = text;
+    this.timestamp = timestamp;
+    this.time = time;
+    this.name = name;
   }
 }

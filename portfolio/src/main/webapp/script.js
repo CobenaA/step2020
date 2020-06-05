@@ -56,11 +56,28 @@ function getDataJSON() {
 function createCommentElement(comment) {
 
     const commentEl = document.createElement('li');
-    commentEl.className = 'comment';
+    commentEl.className = 'comment container';
 
     const textElement = document.createElement('span');
-    textElement.innerText = comment.text;
+    textElement.innerText = comment.text + "\n" + comment.time + "\n";
+
+    const deleteButtonElement = document.createElement('button');
+    deleteButtonElement.innerText = 'Delete';
+    deleteButtonElement.addEventListener('click', () => {
+        deleteComment(comment);
+
+        // Remove the task from the DOM.
+        commentEl.remove();
+    });
 
     commentEl.appendChild(textElement);
+    commentEl.appendChild(deleteButtonElement);
     return commentEl;
+}
+
+/** Tells the server to delete the comment. */
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
 }

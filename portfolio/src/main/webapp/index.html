@@ -6,31 +6,7 @@
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="skeleton.css">
     <script src="script.js"></script>
-
-    <style>
-        .container {
-        margin-top: 50px;
-        }
-        
-        #nav {
-        margin: 13px 0 0 0;
-        }
-        
-        #nav ul li {
-        display: inline;
-        margin: 0 20px 0 0;
-        margin-bottom: 130px;
-        font-size:150%;
-        }
-        
-        #nav a {
-        text-decoration: none;
-        }
-        
-        #nav a:hover {
-        text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body onload="getDataJSON()">
     <div class="container">
@@ -92,11 +68,21 @@
         <form action="/data" method="POST">
 
         <p>Comment:</p>
-        <textarea name="text-input"></textarea>
+        <input type="text" placeholder="Name" name="name"></input>
         <br/><br/>
-
-        <input type="submit" />
+        <input type="text" name="text-input"></input>
+        <br/><br/>
+        <label for="show">Show:</label>
+        <select name="show" id="showAmt" onchange-"getDataJSON()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="All">All</option>
+        </select>
+        <br><br>
+        <input type="submit" value="submit">
         </form>
+
         <ul id="history"></ul>
     </div>
   </body>
