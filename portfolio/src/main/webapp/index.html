@@ -32,7 +32,7 @@
         }
     </style>
   </head>
-  <body>
+  <body onload="getDataJSON()">
     <div class="container">
         <div class="six columns">
             <h3><em>Ariel Cobena</em></h3>
@@ -88,9 +88,16 @@
         </div>
     </div>
 
-    <div class="container" id="content">
-      <button class="button-primary" onclick="getDataJSON()">Click here to fetch data from DataServlet</button>
-      <ul id="data-container"></ul>
-    </div>    
+    <div class="container" id="comments">   
+        <form action="/data" method="POST">
+
+        <p>Comment:</p>
+        <textarea name="text-input"></textarea>
+        <br/><br/>
+
+        <input type="submit" />
+        </form>
+        <ul id="history"></ul>
+    </div>
   </body>
 </html>

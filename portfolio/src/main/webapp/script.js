@@ -41,21 +41,16 @@ async function getData() {
  */
 function getDataJSON() {
 
-
     fetch('/data').then(response => response.json()).then((msgs) => {
-    // stats is an object, not a string, so we have to
-    // reference its fields to create HTML content
-    console.log(msgs);
-    const statsListElement = document.getElementById('data-container');
-    statsListElement.innerHTML = '';
-    statsListElement.appendChild(
-        createListElement('one: ' + msgs.one));
-    statsListElement.appendChild(
-        createListElement('two: ' + msgs.two));
-    statsListElement.appendChild(
-        createListElement('three: ' + msgs.three));
-  });
+        console.log(msgs);
+        const historyEl = document.getElementById('history');
+        for (var key in msgs){
+            historyEl.appendChild(createListElement(msgs[key]));
+        }
+    });
 }
+
+
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {

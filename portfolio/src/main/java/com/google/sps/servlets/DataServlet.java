@@ -20,37 +20,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList; 
+import java.util.*;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private final ArrayList<String> history = new ArrayList<String>();
 
-    // Create ArrayList and add three messages
-    ArrayList<String> messages = new ArrayList<String>();
-    messages.add("First message");
-    messages.add("Second message");
-    messages.add("Third message");
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        // Convert to JSON
+        String jsonStr = "{";
+        for(int i = 0; i < history.size(); i++){
+            jsonStr+= "\"m" + i + "\" :";
+            jsonStr += "\"" + history.get(i) + "\"";
+            if(i != (history.size() - 1)){
+                jsonStr += ",";
+            }   
+        }
+        jsonStr += "}";
+        response.getWriter().println(jsonStr);
+    } 
 
-    //Convert the ArrayList to a json string
-    String json = "{";
-    json += "\"one\":";
-    json += "\"" + messages.get(0) + "\"";
-    json += ",";
-    json += "\"two\":";
-    json += "\"" + messages.get(1) + "\"";
-    json += ",";
-    json += "\"three\":";
-    json += "\"" + messages.get(2) + "\"";
-    json += "}";
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    // response.setContentType("text/html;");
-    // response.getWriter().println("<h2>Hello Ariel!</h2>");
+        // Get the input from the form.
+        String text = request.getParameter("text-input");
+        history.add(text);
 
-    // Send the JSON as the response
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
-  }
+        // Redirect back to the HTML page.
+        response.sendRedirect("/index.html");
+    }
 }
