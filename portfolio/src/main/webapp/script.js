@@ -41,20 +41,26 @@ async function getData() {
  */
 function getDataJSON() {
 
-    fetch('/data').then(response => response.json()).then((msgs) => {
-        console.log(msgs);
-        const historyEl = document.getElementById('history');
-        for (var key in msgs){
-            historyEl.appendChild(createListElement(msgs[key]));
-        }
+    fetch('/data').then(response => response.json()).then((comments) => {
+        console.log(comments);
+        const commentsEl = document.getElementById('history');
+        comments.forEach((comment) => {
+            commentsEl.appendChild(createCommentElement(comment));
+        })
     });
 }
 
 
 
 /** Creates an <li> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+function createCommentElement(comment) {
+
+    const commentEl = document.createElement('li');
+    commentEl.className = 'comment';
+
+    const textElement = document.createElement('span');
+    textElement.innerText = comment.text;
+
+    commentEl.appendChild(textElement);
+    return commentEl;
 }
