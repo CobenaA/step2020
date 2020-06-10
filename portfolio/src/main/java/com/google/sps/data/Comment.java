@@ -25,13 +25,13 @@ public final class Comment {
   private final String time;
   private final String name;
 
-  public Comment(long id, String text, long timestamp, String time) {
-    this.id = id;
-    this.text = text;
-    this.timestamp = timestamp;
-    this.time = time;
-    this.name = "Anonymous";
-  }
+//   public Comment(long id, String text, long timestamp, String time) {
+//     this.id = id;
+//     this.text = text;
+//     this.timestamp = timestamp;
+//     this.time = time;
+//     this.name = "Anonymous";
+//   }
 
   public Comment(long id, String text, long timestamp, String time, String name) {
     this.id = id;

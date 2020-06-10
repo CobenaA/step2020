@@ -59,7 +59,10 @@ function createCommentElement(comment) {
     commentEl.className = 'comment container';
 
     const textElement = document.createElement('span');
-    textElement.innerText = comment.text + "\n" + comment.time + "\n";
+    textElement.innerText = comment.text + "\n";
+
+    const userElement = document.createElement('span');
+    userElement.innerText = comment.name + "\t" + comment.time + "\n";
 
     const deleteButtonElement = document.createElement('button');
     deleteButtonElement.innerText = 'Delete';
@@ -70,6 +73,7 @@ function createCommentElement(comment) {
         commentEl.remove();
     });
 
+    commentEl.appendChild(userElement);
     commentEl.appendChild(textElement);
     commentEl.appendChild(deleteButtonElement);
     return commentEl;
@@ -80,4 +84,34 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   fetch('/delete-comment', {method: 'POST', body: params});
+}
+
+/** Checks if user is logged in and builds proper UI */
+async function checkLogin(){
+    const response = await fetch('/user');
+    const data = await response.text();
+    return data;
+}
+
+/**Create login or logout element for nav bar */
+function navBar(loggedIn){
+    const navBarEl = document.getElementById('nav');
+    navBarEl.className = 'nav';
+    const navEl = document.createElement('li');
+    const hrefEl = document.createElement('a');
+    console.log(loggedIn);
+    if(loggedIn){
+        hrefEl.textContent = "Logout";
+    } else {
+        hrefEl.textContent = "Login";
+    }
+    hrefEl.setAttribute('href', '/login');
+    navEl.appendChild(hrefEl);
+    navBarEl.appendChild(navEl);
+}
+
+/** Runs all functions when loading page */
+function onLoad() {
+    navBar(checkLogin());
+    getDataJSON();
 }

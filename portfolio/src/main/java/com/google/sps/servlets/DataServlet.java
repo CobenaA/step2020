@@ -24,6 +24,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,9 +42,14 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        
+        UserService userService = UserServiceFactory.getUserService();
+        if(userService.isUserLoggedIn()){
+            System.out.println("Logged In: " + userService.getCurrentUser().getEmail());
+        } else {
+            System.out.println("Not Logged In");
+        }
         String amount = request.getParameter("show");
-        System.out.println(amount);
 
         Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
 
@@ -55,8 +62,8 @@ public class DataServlet extends HttpServlet {
             String text = (String) entity.getProperty("text");
             long timestamp = (long) entity.getProperty("timestamp");
             String time = (String) entity.getProperty("time");
-
-            Comment comment = new Comment(id, text, timestamp, time);
+            String name = (String) entity.getProperty("name");
+            Comment comment = new Comment(id, text, timestamp, time, name);
             comments.add(comment);
         }
         
@@ -72,9 +79,7 @@ public class DataServlet extends HttpServlet {
 
         // Get the input from the form.
         String text = request.getParameter("text-input");
-        String name = request.getParameter("name");
         String showAmt = request.getParameter("show");
-        System.out.println(showAmt);
         if(text.isEmpty()){
             response.sendRedirect("/?show=" + showAmt);
             return;
@@ -83,16 +88,20 @@ public class DataServlet extends HttpServlet {
         LocalDateTime myDateObj = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String time = myDateObj.format(myFormatObj);
+        // Get name if user is logged in or use Anonymous
+        String name;
+        UserService userService = UserServiceFactory.getUserService();
+        if(userService.isUserLoggedIn()){
+            name = userService.getCurrentUser().getEmail();
+        } else {
+            name = "Anonymous";
+        }
 
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("text", text);
         commentEntity.setProperty("timestamp", timestamp);
         commentEntity.setProperty("time", time);
-        if(name.isEmpty()){
-            commentEntity.setProperty("name", "Anonymous");
-        } else {
-            commentEntity.setProperty("name", name);
-        }
+        commentEntity.setProperty("name", name);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
