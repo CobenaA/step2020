@@ -34,21 +34,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList; 
 import java.util.*;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/* Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-
-    // private final ArrayList<String> history = new ArrayList<String>();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
+        
         UserService userService = UserServiceFactory.getUserService();
+    
+
         if(userService.isUserLoggedIn()){
             System.out.println("Logged In: " + userService.getCurrentUser().getEmail());
         } else {
             System.out.println("Not Logged In");
         }
+
         String amount = request.getParameter("show");
 
         Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
@@ -57,6 +59,7 @@ public class DataServlet extends HttpServlet {
         PreparedQuery results = datastore.prepare(query);
 
         List<Comment> comments = new ArrayList<>();
+
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
             String text = (String) entity.getProperty("text");

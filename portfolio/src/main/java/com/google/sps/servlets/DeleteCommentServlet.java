@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet responsible for deleting comment. */
+/* Servlet responsible for deleting comment. */
 @WebServlet("/delete-comment")
 public class DeleteCommentServlet extends HttpServlet {
 

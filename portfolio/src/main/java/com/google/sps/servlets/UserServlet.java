@@ -28,10 +28,10 @@ public class UserServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+        response.setContentType("application/json;");
 
         UserService userService = UserServiceFactory.getUserService();
 
-        response.getWriter().println(userService.isUserLoggedIn());
+        response.getWriter().println("{\"status\": \"" + userService.isUserLoggedIn() + "\"}");
     }
 }
