@@ -41,25 +41,22 @@ public class DataServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
-        
+        // Check if user is logged in
         UserService userService = UserServiceFactory.getUserService();
-    
-
         if(userService.isUserLoggedIn()){
             System.out.println("Logged In: " + userService.getCurrentUser().getEmail());
         } else {
             System.out.println("Not Logged In");
         }
 
+        // Create a query for comments in Datastore 
         String amount = request.getParameter("show");
-
         Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
+        // Create ArrayList to store comments and then add them
         List<Comment> comments = new ArrayList<>();
-
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
             String text = (String) entity.getProperty("text");
@@ -70,8 +67,8 @@ public class DataServlet extends HttpServlet {
             comments.add(comment);
         }
         
+        // Convert the ArrayList into a json and return
         Gson gson = new Gson();
-
         response.setContentType("application/json;");
         response.getWriter().println(gson.toJson(comments));
 
@@ -91,6 +88,7 @@ public class DataServlet extends HttpServlet {
         LocalDateTime myDateObj = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String time = myDateObj.format(myFormatObj);
+        
         // Get name if user is logged in or use Anonymous
         String name;
         UserService userService = UserServiceFactory.getUserService();
@@ -100,12 +98,12 @@ public class DataServlet extends HttpServlet {
             name = "Anonymous";
         }
 
+        // Add entity to Datastore 
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("text", text);
         commentEntity.setProperty("timestamp", timestamp);
         commentEntity.setProperty("time", time);
         commentEntity.setProperty("name", name);
-
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
 

@@ -65,10 +65,10 @@ async function checkLogin() {
     var loginStatus = data.status;
 
     if(loginStatus == "true"){
-        return("yes");
+        return true;
     }
 
-    return "no";
+    return false;
 }
 
 
@@ -77,7 +77,7 @@ function navBar(loggedIn){
     console.log("navBar() " + loggedIn)
     const accButton = document.getElementById('accountbutton');
 
-    if(loggedIn == "yes"){
+    if(loggedIn){
         accButton.text = "Logout";
     } else {
         accButton.text = "Login";

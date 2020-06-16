@@ -17,24 +17,24 @@ package com.google.sps.data;
 /** A user on a website. */
 public final class User {
 
-    private final String urlToRedirectToAfterUserLogsOut;
+    private final String logoutRedirectUrl;
     private final String userEmail;
     private final String logoutUrl;
-    private final String urlToRedirectToAfterUserLogsIn;
+    private final String loginRedirectUrl;
     private final String loginUrl;
 
-    public User(String urlToRedirectToAfterUserLogsOut, String userEmail, String logoutUrl) {
-        this.urlToRedirectToAfterUserLogsOut = urlToRedirectToAfterUserLogsOut;
+    public User(String logoutRedirectUrl, String userEmail, String logoutUrl) {
+        this.logoutRedirectUrl = logoutRedirectUrl;
         this.userEmail = userEmail;
         this.logoutUrl = logoutUrl;
-        this.urlToRedirectToAfterUserLogsIn = null;
+        this.loginRedirectUrl = null;
         this.loginUrl = null;
     }
 
-    public User(String urlToRedirectToAfterUserLogsIn, String loginUrl) {
-        this.urlToRedirectToAfterUserLogsIn = urlToRedirectToAfterUserLogsIn;
+    public User(String loginRedirectUrl, String loginUrl) {
+        this.loginRedirectUrl = loginRedirectUrl;
         this.loginUrl = loginUrl;
-        this.urlToRedirectToAfterUserLogsOut = null;
+        this.logoutRedirectUrl = null;
         this.userEmail = null;
         this.logoutUrl = null;
     }
