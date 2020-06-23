@@ -87,7 +87,7 @@ public class DataServlet extends HttpServlet {
 
         // Get the input from the form.
         String text = request.getParameter("text-input");
-        if(request.getParameter("show") == "All"){
+        if(request.getParameter("show").equals("All")){
             showAmt = -1;
         } else { 
             showAmt = Integer.parseInt(request.getParameter("show"));
