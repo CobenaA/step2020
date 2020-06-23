@@ -5,36 +5,14 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="skeleton.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js"></script>
-
-    <style>
-        .container {
-        margin-top: 50px;
-        }
-        
-        #nav {
-        margin: 13px 0 0 0;
-        }
-        
-        #nav ul li {
-        display: inline;
-        margin: 0 20px 0 0;
-        margin-bottom: 130px;
-        font-size:150%;
-        }
-        
-        #nav a {
-        text-decoration: none;
-        }
-        
-        #nav a:hover {
-        text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
-  <body>
+  <body onload="onLoad()">
     <div class="container">
-        <div class="six columns">
+
+        <div class="five columns">
             <h3><em>Ariel Cobena</em></h3>
         </div>
          
@@ -44,15 +22,17 @@
             <li><a href="#">Experience</a></li>
             <li><a href="https://github.com/CobenaA">GitHub</a></li>
             <li><a href="https://www.linkedin.com/in/ariel-cobena-054813196/">LinkedIn</a></li>
-            <!-- <li><a href="#">Updates</a></li> -->
+            <li><a id="accountbutton" href="/login">Login</a></li>
         </div>
 
         <div id="welcome" class="sixteen columns">
-            <h1>[Aesthetic picture here]</1>
-            <h6>Text Overlay</h6>
+            
         </div>
+
     </div>
+
     <div class="container">
+
         <div class="one-third column feature">
             <h2>About</h2>
             <p>Hello! I'm Ariel, a rising sophomore studying Computer Science at Rensselaer Polytechnic Institute in Troy, NY. I was born and raised in New York City with both parents being Peruvian. Apart from programming, I enjoy drinking cold brew and buying too much new tech. </p>
@@ -86,11 +66,44 @@
                 </li>
             </ul>
         </div>
+
     </div>
 
-    <div class="container" id="content">
-      <button class="button-primary" onclick="getDataJSON()">Click here to fetch data from DataServlet</button>
-      <ul id="data-container"></ul>
-    </div>    
+    <div class="container" id="comments">   
+        <form action="/data" method="POST">
+
+        <p>Comment:</p>
+        <input type="text" name="text-input"></input>
+        <br/><br/>
+        <label for="show">Show:</label>
+            <select name="show" id="showAmt">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="All">All</option>
+            </select>
+            <br><br>
+            <input type="submit" value="submit" />
+        </form>
+
+        <ul id="history"></ul>
+    </div>
+
+    <div class="container">
+        <h1>Favorite Foods</h1>
+        <h4>Vote</h2>
+        <form action="/vote-data" method="POST">
+            <select name="food">
+                <option value="Ramen">Ramen</option>
+                <option value="Pizza">Pizza</option>
+                <option value="Burgers">Burgers</option>
+                <option value="Salad">Salad</option>
+                <option value="Sushi">Sushi</option>
+            </select>
+            <button>Submit</button>
+        </form>
+        <div class="container" id="chart-container"></div>
+    </div>
+    
   </body>
 </html>
