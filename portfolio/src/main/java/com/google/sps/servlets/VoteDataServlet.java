@@ -28,10 +28,15 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/vote-data")
 public class VoteDataServlet extends HttpServlet {
 
-  private Map<String, Integer> foodVotes = new HashMap<>();
+  private Map<String, Integer> foodVotes;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // if(!foodVotes){
+    //     foodVotes = new HashMap<>();
+    //     Entity chartEntity = new Entity("Chart");
+    //     chartEntity.setProperty("hashMap", foodVotes);
+    // } else {}
     response.setContentType("application/json");
     Gson gson = new Gson();
     String json = gson.toJson(foodVotes);

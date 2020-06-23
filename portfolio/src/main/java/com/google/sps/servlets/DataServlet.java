@@ -38,6 +38,8 @@ import java.util.*;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+    int showAmt = -1;
+     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
@@ -57,6 +59,7 @@ public class DataServlet extends HttpServlet {
 
         // Create ArrayList to store comments and then add them
         List<Comment> comments = new ArrayList<>();
+        int counter = 0;
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
             String text = (String) entity.getProperty("text");
@@ -65,6 +68,11 @@ public class DataServlet extends HttpServlet {
             String name = (String) entity.getProperty("name");
             Comment comment = new Comment(id, text, timestamp, time, name);
             comments.add(comment);
+            counter++;
+            System.out.println(counter + " " + showAmt);
+            if(counter == showAmt){
+                break;
+            }
         }
         
         // Convert the ArrayList into a json and return
@@ -79,9 +87,14 @@ public class DataServlet extends HttpServlet {
 
         // Get the input from the form.
         String text = request.getParameter("text-input");
-        String showAmt = request.getParameter("show");
+        if(request.getParameter("show") == "All"){
+            showAmt = -1;
+        } else { 
+            showAmt = Integer.parseInt(request.getParameter("show"));
+        }
+
         if(text.isEmpty()){
-            response.sendRedirect("/?show=" + showAmt);
+            response.sendRedirect("/");
             return;
         }
         long timestamp = System.currentTimeMillis();
